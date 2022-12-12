@@ -194,32 +194,9 @@ async function getOneCatInfo(el) {
       `);
     }
   }
-  // <div class="p-2 bg-light border">Grid item 1</div>
-  // <div class="p-2 bg-light border">Grid item 2</div>
-  // <div class="p-2 bg-light border">Grid item 3</div>
-  // Получим ответ [{...}, {...}, {...}, ...]
-  // if (oneCat.age) {
-  //   console.log(oneCat.age);
-  //   if (oneCat.age > 4 || oneCat.age === 0) {
-  //     document.querySelector('#exampleModalToggle2 > div > div > div.modal-body > div > div > div.card-body > div.d-flex.justify-content-between.align-items-center.mt-2').insertAdjacentElement('afterbegin', `
-  //     <div class="p-2 bg-light border">${oneCat.age} лет</div>
-  //     `);
-  //   } else if (oneCat.age === 1) {
-  //     document.querySelector('#exampleModalToggle2 > div > div > div.modal-body > div > div > div.card-body > div.d-flex.justify-content-between.align-items-center.mt-2').insertAdjacentElement('afterbegin', `
-  //     <div class="p-2 bg-light border">${oneCat.age} год</div>
-  //     `);
-  //   } else if (oneCat.age > 1 && oneCat.age < 5) {
-  //     document.querySelector('#exampleModalToggle2 > div > div > div.modal-body > div > div > div.card-body > div.d-flex.justify-content-between.align-items-center.mt-2').insertAdjacentElement('afterbegin', `
-  //     <div class="p-2 bg-light border">${oneCat.age} года</div>
-  //     `);
-  //   }
-  // }
 }
-
 // конец Получаем котиков
-
 // получаем котика для модального окна, информация о котике по клику
-
 // Шаблон карточек при выводе всех котиков на главной
 const getCatHTMLv2 = (cat) => `<div class="col" value="${cat.id}">
 <span class="visually-hidden" id="catIdSpan">${cat.id}</span>
@@ -248,38 +225,3 @@ document.querySelectorAll('body > div.d-grid.gap-1 > div > div ').forEach((el) =
     getOneCatInfo(el.target.closest('.col').childNodes[1].textContent);
   });
 });
-
-// конец
-// ZholobovSS
-// Yanlex
-// {
-//   "id": 1,
-//   "name": "Имя котика",
-//   "image": "Ссылка на изображение",
-//   "age": 0,
-//   "rate": 0,
-//   "favorite": false,
-//   "description": ""
-// }
-// data[0].value
-// 0
-// :
-// {name: 'cat-id', value: ''}
-// 1
-// :
-// {name: 'cat-name', value: ''}
-// 2
-// :
-// {name: 'cat-image', value: ''}
-// 3
-// :
-// {name: 'cat-age', value: ''}
-// 4
-// :
-// {name: 'floatingSelect', value: 'Оценить котика'}
-// 5
-// :
-// {name: 'cat-description', value: ''}
-// 6
-// :
-// {name: 'cat-fav', value: false}
