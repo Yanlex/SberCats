@@ -139,8 +139,8 @@ function contentLoad() {
 }
 
 // https://cats.petiteweb.dev/api/single/yanlex/show/1
-async function getOneCatInfo() {
-  fetch('https://cats.petiteweb.dev/api/single/yanlex/show/1')
+async function getOneCatInfo(el) {
+  fetch(`https://cats.petiteweb.dev/api/single/${myLogIn}/show/${el}`)
     .then((response) => response.json())
     .then((cat) => {
       oneCat = cat;
@@ -162,7 +162,6 @@ async function getOneCatInfo() {
 
   function changeCatCard() {
     if (oneCat.age) {
-      console.log(oneCat.age);
       if (oneCat.age > 4 || oneCat.age === 0) {
         document.querySelector('#exampleModalToggle2 > div > div > div.modal-body > div > div > div.card-body > div.d-flex.justify-content-between.align-items-center.mt-2').insertAdjacentHTML('afterbegin', `
         <div class="p-2 bg-light border">Мне: ${oneCat.age} лет</div>
@@ -184,14 +183,14 @@ async function getOneCatInfo() {
     }
 
     if (oneCat.rate) {
-      document.querySelector('#exampleModalToggle2 > div > div > div.modal-body > div > div > div.card-body').insertAdjacentHTML('beforeend', `<div class="p-2 bg-light border">Мой рейтинг: ${oneCat.rate}<div class="progress">
+      document.querySelector('#exampleModalToggle2 > div > div > div.modal-body > div > div > div.card-body').insertAdjacentHTML('beforeEnd', `<div class="p-2 bg-light border">Мой рейтинг: ${oneCat.rate}<div class="progress">
       <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: ${oneCat.rate * 10}%"></div>
     </div></div>
       `);
     }
 
     if (oneCat.description) {
-      document.querySelector('#exampleModalToggle2 > div > div > div.modal-body > div > div > div.card-body').insertAdjacentHTML('beforeend', `<div class="p-2 bg-light border">${oneCat.description}</div>
+      document.querySelector('#exampleModalToggle2 > div > div > div.modal-body > div > div > div.card-body').insertAdjacentHTML('beforeEnd', `<div class="p-2 bg-light border">${oneCat.description}</div>
       `);
     }
   }
@@ -222,8 +221,8 @@ async function getOneCatInfo() {
 // получаем котика для модального окна, информация о котике по клику
 
 // Шаблон карточек при выводе всех котиков на главной
-const getCatHTMLv2 = (cat) => `<div class="col">
-<span class="visually-hidden">${cat.id}</span>
+const getCatHTMLv2 = (cat) => `<div class="col" value="${cat.id}">
+<span class="visually-hidden" id="catIdSpan">${cat.id}</span>
 <div class="card shadow-sm">
 <div class="imageChangeSize">
 <img class="rounded img-thumbnail" src="${cat.image}" alt="Card image cap"></div>
@@ -242,8 +241,11 @@ const getCatHTMLv2 = (cat) => `<div class="col">
 // вызов модального окна при клике на карточку котика
 document.querySelectorAll('body > div.d-grid.gap-1 > div > div ').forEach((el) => {
   el.addEventListener('click', (el) => {
+    if (document.querySelector('#exampleModalToggle2 > div > div > div.modal-body').childNodes.length) {
+      document.querySelector('#exampleModalToggle2 > div > div > div.modal-body').textContent = '';
+    }
     document.querySelector('body > button:nth-child(7)').click();
-    getOneCatInfo();
+    getOneCatInfo(el.target.closest('.col').childNodes[1].textContent);
   });
 });
 
