@@ -1,0 +1,5 @@
+.imageChangeSize img {
+    object-fit: cover;
+    height: 306px;
+    width: 100%;
+}

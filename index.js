@@ -162,7 +162,7 @@ async function getOneCatInfo(el) {
         <div class="imageChangeSize">
         <img class="rounded img-thumbnail" src="${cat.image}" alt="Card image cap"></div>
           <div class="card-body">
-          <p class="h4">Моя кличка: ${cat.name}</p>
+          <p class="h4">${cat.name}</p>
           <div class="d-grid gap-3">
           </div>
             <div class="d-flex justify-content-between align-items-center mt-2">
@@ -176,9 +176,9 @@ async function getOneCatInfo(el) {
         <div class="d-grid gap-3">
   <div class="p-2 bg-light border"><input class="form-control" id="cat-name-update" name="cat-name-update" type="text" placeholder="${cat.name}" aria-label="default input example"></div>
   <div class="p-2 bg-light border"><input class="form-control" id="cat-image-update" name="cat-image-update" type="text" placeholder="${cat.image}" aria-label="default input example"></div>
-  <div class="p-2 bg-light border"><input class="form-control" id="cat-age-update" name="cat-age-update" type="number" placeholder="Возраст котика: ${cat.age}" aria-label="default input example"></div>
-  <div class="p-2 bg-light border"><input class="form-control" id="cat-rate-update" name="cat-rate-update" type="text" placeholder="Рейтинг котика: ${cat.rate}" aria-label="default input example"></div>
-  <div class="p-2 bg-light border"></div><textarea class="form-control" id="cat-description-update" name="cat-description-update" placeholder="Описание котика: ${cat.description}" id="floatingTextarea"></textarea>
+  <div class="p-2 bg-light border"><input class="form-control" id="cat-age-update" name="cat-age-update" type="number" placeholder="Возраст: ${cat.age}" aria-label="default input example"></div>
+  <div class="p-2 bg-light border"><input class="form-control" id="cat-rate-update" name="cat-rate-update" type="text" placeholder="Рейтинг: ${cat.rate}" aria-label="default input example"></div>
+  <div class="p-2 bg-light border"></div><textarea class="form-control" id="cat-description-update" name="cat-description-update" placeholder="Описание: ${cat.description}" id="floatingTextarea"></textarea>
             <div class="position-relative">
   <div class="position-absolute top-0 start-50 translate-middle-x">
     <div class="form-check mb-3">
@@ -216,15 +216,15 @@ async function getOneCatInfo(el) {
     if (oneCat.age) {
       if (oneCat.age > 4 || oneCat.age === 0) {
         document.querySelector('#exampleModalToggle2 > div > div > div.modal-body > div > div > div.card-body > div.d-flex.justify-content-between.align-items-center.mt-2').insertAdjacentHTML('afterbegin', `
-        <div class="p-2 bg-light border">Мне: ${oneCat.age} лет</div>
+        <div class="p-2 bg-light border">Возраст: ${oneCat.age} лет</div>
         `);
       } else if (oneCat.age === 1) {
         document.querySelector('#exampleModalToggle2 > div > div > div.modal-body > div > div > div.card-body > div.d-flex.justify-content-between.align-items-center.mt-2').insertAdjacentHTML('afterbegin', `
-        <div class="p-2 bg-light border">Мне: ${oneCat.age} год</div>
+        <div class="p-2 bg-light border">Возраст: ${oneCat.age} год</div>
         `);
       } else if (oneCat.age > 1 && oneCat.age < 5) {
         document.querySelector('#exampleModalToggle2 > div > div > div.modal-body > div > div > div.card-body > div.d-flex.justify-content-between.align-items-center.mt-2').insertAdjacentHTML('afterbegin', `
-        <div class="p-2 bg-light border">Мне: ${oneCat.age} года</div>
+        <div class="p-2 bg-light border">Возраст: ${oneCat.age} года</div>
         `);
       }
     }
@@ -235,8 +235,8 @@ async function getOneCatInfo(el) {
     }
 
     if (oneCat.rate) {
-      document.querySelector('#exampleModalToggle2 > div > div > div.modal-body > div > div > div.card-body').insertAdjacentHTML('beforeEnd', `<div class="p-2 bg-light border">Мой рейтинг: ${oneCat.rate}<div class="progress">
-      <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: ${oneCat.rate * 10}%"></div>
+      document.querySelector('#exampleModalToggle2 > div > div > div.modal-body > div > div > div.card-body').insertAdjacentHTML('beforeEnd', `<div class="p-2 bg-light border">Рейтинг: ${oneCat.rate}<div class="progress">
+      <div class="progress-bar bg-success" role="progressbar" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: ${oneCat.rate * 10}%"></div>
     </div></div>
       `);
     }
@@ -252,14 +252,18 @@ async function getOneCatInfo(el) {
 // Шаблон карточек при выводе всех к
 const getCatHTMLv2 = (cat) => `<div class="col" value="${cat.id}" id="cat-id${cat.id}">
 <span class="visually-hidden" id="catIdSpan">${cat.id}</span>
-<div class="card shadow-sm">
+<div class="card shadow-sm h-100">
 <div class="imageChangeSize">
 <img class="rounded img-thumbnail" src="${cat.image}" alt="Card image cap"></div>
   <div class="card-body">
   <p class="h3">${cat.name}</p>
-    <div class="d-flex justify-content-between align-items-center mt-2">
-      <div class="btn-group">
-        <button type="button" class="btn btn-sm btn-outline-primary">Редактировать</button>
+  <div class="p-2 bg-light border">Рейтинг: ${cat.rate}<div class="progress">
+  <div class="progress-bar bg-success" role="progressbar" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: ${cat.rate * 10}%"></div>
+</div></div>
+<div class="p-2 bg-light border">${cat.description}</div>
+<div class="">
+      <div class="d-grid gap-2 mt-2">
+        <button type="button" class="btn btn-light">Редактировать</button>
       </div>
     </div>
   </div>
