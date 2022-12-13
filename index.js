@@ -119,7 +119,7 @@ async function sendData(data) {
       'Content-Type': 'application/json;charset=utf-8',
     },
     body: JSON.stringify(data),
-  });
+  }).then(() => localStorage.setItem(`CatAdd id${myFetch.id}`, JSON.stringify(data)));
 }
 
 async function handleFormSubmit(event) {
