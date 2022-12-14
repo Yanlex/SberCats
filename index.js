@@ -193,15 +193,15 @@ async function getOneCatInfo(el) {
         <span class="visually-hidden">${cat.id}</span>
         <form id="updateCatForm" name="updateCatForm">
         <div class="d-grid gap-3">
-  <div class="p-2 bg-light border"><input class="form-control" id="cat-name-update" name="cat-name-update" type="text" placeholder="${cat.name}" aria-label="default input example"></div>
-  <div class="p-2 bg-light border"><input class="form-control" id="cat-image-update" name="cat-image-update" type="text" placeholder="${cat.image}" aria-label="default input example"></div>
-  <div class="p-2 bg-light border"><input class="form-control" id="cat-age-update" name="cat-age-update" type="number" placeholder="Возраст: ${cat.age}" aria-label="default input example"></div>
-  <div class="p-2 bg-light border"><input class="form-control" id="cat-rate-update" name="cat-rate-update" type="text" placeholder="Рейтинг: ${cat.rate}" aria-label="default input example"></div>
-  <div class="p-2 bg-light border"><textarea class="form-control" id="cat-description-update" name="cat-description-update" placeholder="Описание: ${cat.description}" id="floatingTextarea"></textarea></div>
+  <div class="p-2 bg-light border"><input class="form-control" id="cat-name-update" name="cat-name-update" type="text" placeholder="${cat.name}" value="${cat.name}" aria-label="default input example"></div>
+  <div class="p-2 bg-light border"><input class="form-control" id="cat-image-update" name="cat-image-update" type="text" placeholder="${cat.image}" value="${cat.image}" aria-label="default input example"></div>
+  <div class="p-2 bg-light border"><input class="form-control" id="cat-age-update" name="cat-age-update" type="number" placeholder="Возраст: ${cat.age}" value="${cat.age}" aria-label="default input example"></div>
+  <div class="p-2 bg-light border"><input class="form-control" id="cat-rate-update" name="cat-rate-update" type="text" placeholder="Рейтинг: ${cat.rate}" value="${cat.rate}" aria-label="default input example"></div>
+  <div class="p-2 bg-light border"><textarea class="form-control" id="cat-description-update" name="cat-description-update" placeholder="Описание: ${cat.description}"  id="floatingTextarea">${cat.description}</textarea></div>
             <div class="position-relative">
   <div class="position-absolute top-0 start-50 translate-middle-x">
     <div class="form-check mb-3">
-      <input class="form-check-input fs-6" type="checkbox" value="${cat.favorite}" id="cat-fav-update" name="cat-fav-update">
+      <input class="form-check-input fs-6" type="checkbox" value="${cat.favorite}" value="${cat.favorite}" id="cat-fav-update" name="cat-fav-update">
       <label class="form-check-label badge bg-primary text-wrap fs-6" for="cat-fav-update">
         Это любимый котик?
       </label>
