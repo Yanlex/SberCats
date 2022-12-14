@@ -1,11 +1,30 @@
 let myLogIn = '';
-const insideBodyContent = document.querySelector('body > div.d-grid.gap-1 > div > div');
+const $insideBodyContent = document.querySelector('[data-wrapper]');
 // кнопка закрыть у первого модального окна
-const modalCloseButton = document.querySelector('#staticBackdrop > div > div > div.modal-footer > button');
-// username в хедаре
-const headerUserName = document.querySelector('body > div.d-grid.gap-1 > header > div > div > form > div');
-// Добавить котика
-const addCatButton = document.querySelector('#addСatForm > div > div > form > div.modal-footer > button.btn.btn-primary');
+const $modalCloseButton = document.querySelector('[data-cat-info-open-button]');
+// Инпут в хедаре
+const $headerUserName = document.querySelector('[data-cat-loginheader-input]');
+// Кнопка в хедаре сохранить котика
+const $addCatButton = document.querySelector('[data-modal-add-cat-save-button]');
+// Кнопка в хедаре добавить котика
+const $catModalAddCatButton = document.querySelector('[data-cat-modal-add-cat-button]');
+// Инпут в хедаре
+const $headerLoginInput = document.querySelector('[data-header-login-input]');
+// Кнопка ОК в хедаре
+const $headerLoginOkButton = document.querySelector('[data-header-login-ok-button]');
+// Карточка котика
+const $firstModalLoginInput = document.querySelector('[data-first-modal-login-input]');
+// Страница редактировать котика
+const $firstModalLoginOkButton = document.querySelector('[data-first-modal-login-ok-button]');
+
+// Кнопка редактировать краточку на главной
+const $catCardOpenEdit = document.querySelector('[data-cat-open-edit]');
+
+// тело модального окна, информация о котике
+const $modalCatInfoFirst = document.querySelector('[data-modal-first-cat-info]'); // первая карточка
+const $modalCatInfoSecond = document.querySelector('[data-modal-second-cat-info]'); // вторая карточка, с редактированием
+const $modalCatInfoSecondCancelButton = document.querySelector('[data-modal-cat-info-second-cancel]'); // вторая карточка, кнопка отмена
+
 let oneCat = {};
 const catUpdate = {
   name: '',
@@ -18,74 +37,70 @@ const catUpdate = {
 // fetch запрос
 let myFetch = {};
 let catID = 0;
-// Модальное окно при загрузке сайта
+// Вызов модального окна при загрузке сайта
 function ready() {
   setTimeout(() => {
-    document.querySelector('body > div.d-grid.gap-1 > header > div > div > div > button').classList.toggle('visually-hidden');
+    $catModalAddCatButton.classList.toggle('visually-hidden');
     document.querySelector('body').insertAdjacentHTML(
       'afterbegin',
-      '     <!-- Button trigger modal --><button type="button" class="btn btn-primary visually-hidden" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Как вас зовут?</button>',
+      '     <!-- Button trigger modal --><button data-first-login-pop type="button" class="btn btn-primary visually-hidden" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Как вас зовут?</button>',
     );
   });
   setTimeout(() => {
     document.querySelector('body > button').click();
   });
 }
-document.querySelector('#addCat > div.modal-footer > button.btn.btn-primary');
+
 document.addEventListener('DOMContentLoaded', ready);
-// конец
 
 // document.querySelector('#staticBackdrop > div > div > div.modal-body > form > div > button');
 
 // Обработчик инпута в хедаре
-document.querySelector('body > div.d-grid.gap-1 > header > div > div > form > div > input').addEventListener('keypress', (event) => {
+$headerLoginInput.addEventListener('keypress', (event) => {
   if (event.key === 'Enter') {
     event.preventDefault();
-    if (insideBodyContent.childNodes.length) {
-      insideBodyContent.textContent = '';
+    if ($insideBodyContent.childNodes.length) {
+      $insideBodyContent.textContent = '';
     }
     myLogIn = document.getElementsByTagName('input')[0].value;
-    modalCloseButton.click();
+    $modalCloseButton.click();
     contentLoad();
   }
 });
-
-document.querySelector('body > div.d-grid.gap-1 > header > div > div > form > div > button').addEventListener('click', () => {
-  if (insideBodyContent.childNodes.length) {
-    insideBodyContent.textContent = '';
+// обработчик кнопки ОК в хедаре
+$headerLoginOkButton.addEventListener('click', () => {
+  if ($insideBodyContent.childNodes.length) {
+    $insideBodyContent.textContent = '';
   }
   myLogIn = document.getElementsByTagName('input')[0].value;
-  modalCloseButton.click();
+  $modalCloseButton.click();
   contentLoad();
 });
 
-// конец
-
 // Обработчик модального окна при загрузке
-document.querySelector('#staticBackdrop > div > div > div.modal-body > form > div > input').addEventListener('keypress', (event) => {
+$firstModalLoginInput.addEventListener('keypress', (event) => {
   if (event.key === 'Enter') {
     event.preventDefault();
-    if (insideBodyContent.childNodes.length) {
-      insideBodyContent.textContent = '';
+    if ($insideBodyContent.childNodes.length) {
+      $insideBodyContent.textContent = '';
     }
     myLogIn = document.getElementsByTagName('input')[1].value;
-    modalCloseButton.click();
-    headerUserName.classList.toggle('visually-hidden');
-    document.querySelector('body > div.d-grid.gap-1 > header > div > div > div > button').classList.toggle('visually-hidden');
+    $modalCloseButton.click();
+    $headerUserName.classList.toggle('visually-hidden');
+    $catModalAddCatButton.classList.toggle('visually-hidden');
     contentLoad();
   }
 });
 
-document.querySelector('#staticBackdrop > div > div > div.modal-body > form > div > button').addEventListener('click', () => {
-  if (insideBodyContent.childNodes.length) {
-    insideBodyContent.textContent = '';
+$firstModalLoginOkButton.addEventListener('click', () => {
+  if ($insideBodyContent.childNodes.length) {
+    $insideBodyContent.textContent = '';
   }
   myLogIn = document.getElementsByTagName('input')[1].value;
-  modalCloseButton.click();
-  headerUserName.classList.toggle('visually-hidden');
+  $modalCloseButton.click();
+  $headerUserName.classList.toggle('visually-hidden');
   contentLoad();
 });
-// конец
 
 // Обработчик добавить котика https://doka.guide/js/deal-with-forms/
 function serializeForm(formNode) {
@@ -119,7 +134,10 @@ async function sendData(data) {
       'Content-Type': 'application/json;charset=utf-8',
     },
     body: JSON.stringify(data),
-  }).then(() => localStorage.setItem(`CatAdd id${myFetch.id}`, JSON.stringify(data)));
+  }).then(() => localStorage.setItem(`${myFetch.id}`, JSON.stringify(data))).then(() => {
+    $insideBodyContent.textContent = '';
+    contentLoad(myLogIn);
+  });
 }
 
 async function handleFormSubmit(event) {
@@ -132,17 +150,19 @@ async function handleFormSubmit(event) {
 
 const addCatForm = document.querySelector('#addCat');
 addCatForm.addEventListener('submit', handleFormSubmit);
-//
 
 // Получаем котиков
 function contentLoad() {
-  if (insideBodyContent.childNodes.length) {
-    insideBodyContent.textContent = '';
+  if ($insideBodyContent.childNodes.length) {
+    $insideBodyContent.textContent = '';
   }
   fetch(`https://cats.petiteweb.dev/api/single/${myLogIn}/show/`)
     .then((response) => response.json())
     .then((cats) => {
-      document.querySelector('body > div.d-grid.gap-1 > div > div.row')
+      cats.forEach((cat) => {
+        localStorage.setItem(`${cat.id}`, JSON.stringify(cat));
+      });
+      document.querySelector('[data-wrapper]')
         .insertAdjacentHTML(
           'afterbegin',
           cats.map((cat) => getCatHTMLv2(cat)).join(''),
@@ -156,7 +176,7 @@ async function getOneCatInfo(el) {
     .then((response) => response.json())
     .then((cat) => {
       oneCat = cat;
-      document.querySelector('#exampleModalToggle2 > div > div > div.modal-body').insertAdjacentHTML('afterbegin', `<div class="col">
+      $modalCatInfoFirst.insertAdjacentHTML('afterbegin', `<div class="col">
         <span class="visually-hidden">${cat.id}</span>
         <div class="card shadow-sm">
         <div class="imageChangeSize">
@@ -165,12 +185,11 @@ async function getOneCatInfo(el) {
           <p class="h4">${cat.name}</p>
           <div class="d-grid gap-3">
           </div>
-            <div class="d-flex justify-content-between align-items-center mt-2">
-            </div>
+
           </div>
         </div>
         </div>`);
-      document.querySelector('#exampleModalToggle3 > div > div > div.modal-body').insertAdjacentHTML('afterbegin', `<div class="col">
+      $modalCatInfoSecond.insertAdjacentHTML('afterbegin', `<div class="col">
         <span class="visually-hidden">${cat.id}</span>
         <form id="updateCatForm" name="updateCatForm">
         <div class="d-grid gap-3">
@@ -178,7 +197,7 @@ async function getOneCatInfo(el) {
   <div class="p-2 bg-light border"><input class="form-control" id="cat-image-update" name="cat-image-update" type="text" placeholder="${cat.image}" aria-label="default input example"></div>
   <div class="p-2 bg-light border"><input class="form-control" id="cat-age-update" name="cat-age-update" type="number" placeholder="Возраст: ${cat.age}" aria-label="default input example"></div>
   <div class="p-2 bg-light border"><input class="form-control" id="cat-rate-update" name="cat-rate-update" type="text" placeholder="Рейтинг: ${cat.rate}" aria-label="default input example"></div>
-  <div class="p-2 bg-light border"></div><textarea class="form-control" id="cat-description-update" name="cat-description-update" placeholder="Описание: ${cat.description}" id="floatingTextarea"></textarea>
+  <div class="p-2 bg-light border"><textarea class="form-control" id="cat-description-update" name="cat-description-update" placeholder="Описание: ${cat.description}" id="floatingTextarea"></textarea></div>
             <div class="position-relative">
   <div class="position-absolute top-0 start-50 translate-middle-x">
     <div class="form-check mb-3">
@@ -211,38 +230,38 @@ async function getOneCatInfo(el) {
       catUpdate.favorite = cat.favorite;
       catUpdate.description = cat.description;
     }).then(() => changeCatCard());
-  document.querySelector('#exampleModalToggle3 > div > div > div.modal-footer > button.btn.btn-primary');
+
   function changeCatCard() {
     if (oneCat.age) {
       if (oneCat.age > 4 || oneCat.age === 0) {
-        document.querySelector('#exampleModalToggle2 > div > div > div.modal-body > div > div > div.card-body > div.d-flex.justify-content-between.align-items-center.mt-2').insertAdjacentHTML('afterbegin', `
+        $modalCatInfoFirst.insertAdjacentHTML('beforeEnd', `
         <div class="p-2 bg-light border">Возраст: ${oneCat.age} лет</div>
         `);
       } else if (oneCat.age === 1) {
-        document.querySelector('#exampleModalToggle2 > div > div > div.modal-body > div > div > div.card-body > div.d-flex.justify-content-between.align-items-center.mt-2').insertAdjacentHTML('afterbegin', `
+        $modalCatInfoFirst.insertAdjacentHTML('beforeEnd', `
         <div class="p-2 bg-light border">Возраст: ${oneCat.age} год</div>
         `);
       } else if (oneCat.age > 1 && oneCat.age < 5) {
-        document.querySelector('#exampleModalToggle2 > div > div > div.modal-body > div > div > div.card-body > div.d-flex.justify-content-between.align-items-center.mt-2').insertAdjacentHTML('afterbegin', `
+        $modalCatInfoFirst.insertAdjacentHTML('beforeEnd', `
         <div class="p-2 bg-light border">Возраст: ${oneCat.age} года</div>
         `);
       }
     }
     if (oneCat.favorite) {
-      document.querySelector('#exampleModalToggle2 > div > div > div.modal-body > div > div > div.card-body > div.d-flex.justify-content-between.align-items-center.mt-2').insertAdjacentHTML('afterbegin', `
+      $modalCatInfoFirst.insertAdjacentHTML('beforeEnd', `
       <div class="p-2 bg-light border">Я любимчик</div>
       `);
     }
 
     if (oneCat.rate) {
-      document.querySelector('#exampleModalToggle2 > div > div > div.modal-body > div > div > div.card-body').insertAdjacentHTML('beforeEnd', `<div class="p-2 bg-light border">Рейтинг: ${oneCat.rate}<div class="progress">
+      $modalCatInfoFirst.insertAdjacentHTML('beforeEnd', `<div class="p-2 bg-light border">Рейтинг: ${oneCat.rate}<div class="progress">
       <div class="progress-bar bg-success" role="progressbar" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: ${oneCat.rate * 10}%"></div>
     </div></div>
       `);
     }
 
     if (oneCat.description) {
-      document.querySelector('#exampleModalToggle2 > div > div > div.modal-body > div > div > div.card-body').insertAdjacentHTML('beforeEnd', `<div class="p-2 bg-light border">${oneCat.description}</div>
+      $modalCatInfoFirst.insertAdjacentHTML('beforeEnd', `<div class="p-2 bg-light border">${oneCat.description}</div>
       `);
     }
   }
@@ -262,31 +281,31 @@ const getCatHTMLv2 = (cat) => `<div class="col" value="${cat.id}" id="cat-id${ca
 </div></div>
 <div class="p-2 bg-light border">${cat.description}</div>
 <div class="">
-      <div class="d-grid gap-2 mt-2">
-        <button type="button" class="btn btn-light">Редактировать</button>
-      </div>
+
     </div>
   </div>
 </div>
 </div>`;
-document.querySelector('#addCat > div.modal-footer > button.btn.btn-secondary');
+
 // document.addEventListener('click', (e) => console.log(e.target));
 // вызов модального окна при клике на карточку котика
+
 document.querySelectorAll('body > div.d-grid.gap-1 > div > div ').forEach((el) => {
-  el.addEventListener('click', (el) => {
-    if (document.querySelector('#exampleModalToggle2 > div > div > div.modal-body').childNodes.length) {
-      document.querySelector('#exampleModalToggle2 > div > div > div.modal-body').textContent = '';
+  el.addEventListener('click', (els) => {
+    if ($modalCatInfoFirst.childNodes.length) {
+      $modalCatInfoFirst.textContent = '';
     }
-    if (document.querySelector('#exampleModalToggle3 > div > div > div.modal-body').childNodes.length) {
-      document.querySelector('#exampleModalToggle3 > div > div > div.modal-body').textContent = '';
+    if ($modalCatInfoSecond.childNodes.length) {
+      $modalCatInfoSecond.textContent = '';
     }
-    document.querySelector('body > button:nth-child(7)').click();
-    catID = el.target.closest('.col').childNodes[1].textContent;
-    getOneCatInfo(el.target.closest('.col').childNodes[1].textContent);
+
+    document.querySelector('[data-cat-open-info]').click();
+    catID = els.target.closest('.col').childNodes[1].textContent;
+    getOneCatInfo(els.target.closest('.col').childNodes[1].textContent);
   });
 });
 
-document.querySelector('#addCat > div.modal-footer > button.btn.btn-primary').addEventListener('click', (event) => {
+$addCatButton.addEventListener('click', (event) => {
   document.querySelector('#addCat > div.modal-footer > button.btn.btn-secondary').click();
 });
 
@@ -294,6 +313,7 @@ document.querySelector('#exampleModalToggle3 > div > div > div.modal-footer > bu
   document.querySelector('#exampleModalToggle2 > div > div > div.modal-footer > button.btn.btn-primary').click();
   delCat();
   document.getElementById(`cat-id${catID}`).remove();
+  localStorage.removeItem(`${catID}`);
 });
 
 async function delCat() {
@@ -336,4 +356,14 @@ document.querySelector('#exampleModalToggle3 > div > div > div.modal-footer > bu
     .then((data) => element.innerHTML = data.updatedAt)
     .catch((console.error()));
   document.querySelector('#exampleModalToggle3 > div > div > div.modal-footer > button.btn.btn-secondary').click();
+});
+// слушаю id инпут при добавлении котика, првоеряю свободен ли id
+document.querySelector('#cat-id').addEventListener('keyup', (event) => {
+  if (!localStorage.getItem(document.querySelector('#cat-id').value)) {
+    document.querySelector('#cat-id').classList.remove('text-bg-danger');
+    document.querySelector('#cat-id').classList.add('text-bg-success');
+  } else {
+    document.querySelector('#cat-id').classList.remove('text-bg-success');
+    document.querySelector('#cat-id').classList.add('text-bg-danger');
+  }
 });
