@@ -1,6 +1,7 @@
 body {
     background: url(./cats-bg.jpg) no-repeat;
     background-size: cover;
+    height: 100vw;
 }
 
 .imageChangeSize img {

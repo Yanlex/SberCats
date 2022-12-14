@@ -193,7 +193,6 @@ async function getOneCatInfo(el) {
         <span class="visually-hidden">${cat.id}</span>
         <form id="updateCatForm" name="updateCatForm">
         <div class="d-grid gap-3">
-  <div class="p-2 bg-light border"><input class="form-control" id="cat-name-update" name="cat-name-update" type="text" placeholder="${cat.name}" value="${cat.name}" aria-label="default input example"></div>
   <div class="p-2 bg-light border"><input class="form-control" id="cat-image-update" name="cat-image-update" type="text" placeholder="${cat.image}" value="${cat.image}" aria-label="default input example"></div>
   <div class="p-2 bg-light border"><input class="form-control" id="cat-age-update" name="cat-age-update" type="number" placeholder="Возраст: ${cat.age}" value="${cat.age}" aria-label="default input example"></div>
   <div class="p-2 bg-light border"><input class="form-control" id="cat-rate-update" name="cat-rate-update" type="text" placeholder="Рейтинг: ${cat.rate}" value="${cat.rate}" aria-label="default input example"></div>
@@ -324,9 +323,6 @@ async function delCat() {
 
 // -------------------------------- Редактировать котика
 document.querySelector('#exampleModalToggle3 > div > div > div.modal-footer > button.btn.btn-outline-primary').addEventListener('click', () => {
-  if (document.getElementById('cat-name-update').value) {
-    catUpdate.name = document.getElementById('cat-name-update').value;
-  }
   if (document.getElementById('cat-image-update').value) {
     catUpdate.image = document.getElementById('cat-image-update').value;
   }
