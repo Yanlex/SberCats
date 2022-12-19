@@ -41,6 +41,7 @@
               Добавить котика
             </button>
           </div>
+          <!-- это форма в хедаре после загрузки страницы -->
           <form name="main">
             <div data-cat-loginheader-input class="input-group visually-hidden">
               <span class="input-group-text" id="basic-addon1">@</span>
@@ -67,6 +68,7 @@
           </h1>
         </div>
         <div class="modal-body">
+          <!-- это самая первая форма -->
           <form name="main">
             <div class="input-group">
               <span class="input-group-text" id="basic-addon1">@</span>
@@ -93,6 +95,7 @@
           <h1 class="modal-title fs-5" id="exampleModalLabel">Добавить котика</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <!-- форма добавления кота -->
         <form id="addCat" name="addCat">
           <div class="modal-body">
             <div class="d-grid gap-1">
@@ -131,7 +134,7 @@
                 <label for="floatingSelect">Выбрать из списка</label>
               </div>
               <div class="form-floating mb-3">
-                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"
+                <textarea class="form-control" placeholder="Описание котика" id="floatingTextarea"
                   name="cat-description"></textarea>
                 <label for="floatingTextarea">Описание котика</label>
               </div>
@@ -148,15 +151,17 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-            <button data-modal-add-cat-save-button type="submit" class="btn btn-primary">Сохранить</button>
+            <button data-cat-card-modal-add-close-button type="button" class="btn btn-secondary"
+              data-bs-dismiss="modal">Закрыть</button>
+            <button data-modal-add-cat-save-button type="submit" class="btn btn-primary">ДОБАВИТЬ</button>
           </div>
         </form>
       </div>
     </div>
   </div>
 
-  <!--Modal cat info-->
+  <!--Модальное окно при клике на карточку котика-->
+  <!-- первая страница модального окна с информацией о котике-->
   <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
     tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
@@ -174,7 +179,7 @@
       </div>
     </div>
   </div>
-
+  <!-- вторая страница с редактированием или удалением котика -->
   <div class="modal fade" id="exampleModalToggle3" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
     tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
@@ -186,12 +191,14 @@
         <div data-modal-second-cat-info class="modal-body">
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-outline-danger">Удалить котика</button>
-          <button type="button" class="btn btn-secondary visually-hidden" data-bs-dismiss="modal">Закрыть</button>
+          <button data-cat-delete type="button" class="btn btn-outline-danger">Удалить котика</button>
+          <button data-cat-edit-modal-close-button type="button" class="btn btn-secondary"
+            data-bs-dismiss="modal">Закрыть</button>
           <button data-modal-cat-info-second-cancel class="btn btn-primary visually-hidden"
             data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">ОТМЕНА</button>
 
-          <button type="submit" class="btn btn-outline-primary">ОТПРАВИТЬ</button>
+          <button data-cat-edit-modal-second-send-button type="submit"
+            class="btn btn-outline-primary">ОТПРАВИТЬ</button>
         </div>
       </div>
     </div>

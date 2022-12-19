@@ -1,11 +1,17 @@
 let myLogIn = '';
+
+// Модальное окно, добавить кота
+//   Кнопка закрыть
+const $addCatModalCloseButton = document.querySelector('[data-cat-card-modal-add-close-button]');
+//   Кнопка в хедаре сохранить котика
+const $addCatButton = document.querySelector('[data-modal-add-cat-save-button]');
+
 const $insideBodyContent = document.querySelector('[data-wrapper]');
 // кнопка закрыть у первого модального окна
 const $modalCloseButton = document.querySelector('[data-cat-info-open-button]');
 // Инпут в хедаре
 const $headerUserName = document.querySelector('[data-cat-loginheader-input]');
-// Кнопка в хедаре сохранить котика
-const $addCatButton = document.querySelector('[data-modal-add-cat-save-button]');
+
 // Кнопка в хедаре добавить котика
 const $catModalAddCatButton = document.querySelector('[data-cat-modal-add-cat-button]');
 // Инпут в хедаре
@@ -16,6 +22,7 @@ const $headerLoginOkButton = document.querySelector('[data-header-login-ok-butto
 const $firstModalLoginInput = document.querySelector('[data-first-modal-login-input]');
 // Страница редактировать котика
 const $firstModalLoginOkButton = document.querySelector('[data-first-modal-login-ok-button]');
+const $catEditModalSecondSendButton = document.querySelector('[data-cat-edit-modal-second-send-button]'); // кнопка отправить
 
 // Кнопка редактировать краточку на главной
 const $catCardOpenEdit = document.querySelector('[data-cat-open-edit]');
@@ -23,7 +30,10 @@ const $catCardOpenEdit = document.querySelector('[data-cat-open-edit]');
 // тело модального окна, информация о котике
 const $modalCatInfoFirst = document.querySelector('[data-modal-first-cat-info]'); // первая карточка
 const $modalCatInfoSecond = document.querySelector('[data-modal-second-cat-info]'); // вторая карточка, с редактированием
-const $modalCatInfoSecondCancelButton = document.querySelector('[data-modal-cat-info-second-cancel]'); // вторая карточка, кнопка отмена
+const $modalCatEditSecondCloseButton = document.querySelector('[data-cat-edit-modal-close-button]');
+
+// Кнопка удаления котика
+const $catDelete = document.querySelector('[data-cat-delete]');
 
 let oneCat = {};
 const catUpdate = {
@@ -64,7 +74,7 @@ $headerLoginInput.addEventListener('keypress', (event) => {
     }
     myLogIn = document.getElementsByTagName('input')[0].value;
     $modalCloseButton.click();
-    contentLoad();
+    getAllCats();
   }
 });
 // обработчик кнопки ОК в хедаре
@@ -74,7 +84,7 @@ $headerLoginOkButton.addEventListener('click', () => {
   }
   myLogIn = document.getElementsByTagName('input')[0].value;
   $modalCloseButton.click();
-  contentLoad();
+  getAllCats();
 });
 
 // Обработчик модального окна при загрузке
@@ -88,7 +98,7 @@ $firstModalLoginInput.addEventListener('keypress', (event) => {
     $modalCloseButton.click();
     $headerUserName.classList.toggle('visually-hidden');
     $catModalAddCatButton.classList.toggle('visually-hidden');
-    contentLoad();
+    getAllCats();
   }
 });
 
@@ -99,7 +109,7 @@ $firstModalLoginOkButton.addEventListener('click', () => {
   myLogIn = document.getElementsByTagName('input')[1].value;
   $modalCloseButton.click();
   $headerUserName.classList.toggle('visually-hidden');
-  contentLoad();
+  getAllCats();
 });
 
 // Обработчик добавить котика https://doka.guide/js/deal-with-forms/
@@ -127,7 +137,8 @@ function serializeForm(formNode) {
   myFetch = myCatObj;
 }
 
-async function sendData(data) {
+// Обрабочик добавления котика
+async function postAddCat(data) {
   return await fetch(`https://cats.petiteweb.dev/api/single/${myLogIn}/add/`, {
     method: 'POST',
     headers: {
@@ -136,23 +147,21 @@ async function sendData(data) {
     body: JSON.stringify(data),
   }).then(() => localStorage.setItem(`${myFetch.id}`, JSON.stringify(data))).then(() => {
     $insideBodyContent.textContent = '';
-    contentLoad(myLogIn);
+    getAllCats(myLogIn);
   });
 }
 
-async function handleFormSubmit(event) {
+async function catAddModalAddButton(event) {
   event.preventDefault();
-
-  const data = serializeForm(event.target);
-
-  const response = await sendData(myFetch);
+  serializeForm(event.target);
+  return await postAddCat(myFetch);
 }
 
 const addCatForm = document.querySelector('#addCat');
-addCatForm.addEventListener('submit', handleFormSubmit);
+addCatForm.addEventListener('submit', catAddModalAddButton); // Модалка добавить кота, кнопка Добавить
 
 // Получаем котиков
-function contentLoad() {
+function getAllCats() {
   if ($insideBodyContent.childNodes.length) {
     $insideBodyContent.textContent = '';
   }
@@ -287,9 +296,9 @@ const getCatHTMLv2 = (cat) => `<div class="col" value="${cat.id}" id="cat-id${ca
 </div>`;
 
 // document.addEventListener('click', (e) => console.log(e.target));
-// вызов модального окна при клике на карточку котика
 
-document.querySelectorAll('body > div.d-grid.gap-1 > div > div ').forEach((el) => {
+// вызов модального окна при клике на карточку кота
+document.querySelectorAll('[data-wrapper]').forEach((el) => {
   el.addEventListener('click', (els) => {
     if ($modalCatInfoFirst.childNodes.length) {
       $modalCatInfoFirst.textContent = '';
@@ -305,11 +314,12 @@ document.querySelectorAll('body > div.d-grid.gap-1 > div > div ').forEach((el) =
 });
 
 $addCatButton.addEventListener('click', (event) => {
-  document.querySelector('#addCat > div.modal-footer > button.btn.btn-secondary').click();
+  $addCatModalCloseButton.click();
 });
 
-document.querySelector('#exampleModalToggle3 > div > div > div.modal-footer > button.btn.btn-outline-danger').addEventListener('click', (event) => {
-  document.querySelector('#exampleModalToggle2 > div > div > div.modal-footer > button.btn.btn-primary').click();
+// Обработчик кнопки удаления котика
+$catDelete.addEventListener('click', (event) => {
+  $catCardOpenEdit.click();
   delCat();
   document.getElementById(`cat-id${catID}`).remove();
   localStorage.removeItem(`${catID}`);
@@ -322,7 +332,7 @@ async function delCat() {
 }
 
 // -------------------------------- Редактировать котика
-document.querySelector('#exampleModalToggle3 > div > div > div.modal-footer > button.btn.btn-outline-primary').addEventListener('click', () => {
+$catEditModalSecondSendButton.addEventListener('click', () => {
   if (document.getElementById('cat-image-update').value) {
     catUpdate.image = document.getElementById('cat-image-update').value;
   }
@@ -341,17 +351,18 @@ document.querySelector('#exampleModalToggle3 > div > div > div.modal-footer > bu
   const myJSON = JSON.stringify(catUpdate);
 
   // Simple PUT request with a JSON body using fetch
+  // Обновляем котика
   const element = document.querySelector('#put-request .date-updated');
-  const requestOptions = {
+  const putUpdateCatInfo = {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(catUpdate),
   };
-  fetch(`https://cats.petiteweb.dev/api/single/${myLogIn}/update/${catID}`, requestOptions)
+  fetch(`https://cats.petiteweb.dev/api/single/${myLogIn}/update/${catID}`, putUpdateCatInfo)
     .then((response) => response.json())
     .then((data) => element.innerHTML = data.updatedAt)
     .catch((console.error()));
-  document.querySelector('#exampleModalToggle3 > div > div > div.modal-footer > button.btn.btn-secondary').click();
+  $modalCatEditSecondCloseButton.click();
 });
 // слушаю id инпут при добавлении котика, првоеряю свободен ли id
 document.querySelector('#cat-id').addEventListener('keyup', (event) => {
