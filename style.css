@@ -1,7 +1,10 @@
 .mainBacground {
     background: url(./cats-bg.jpg) no-repeat;
     background-size: cover;
+<<<<<<< HEAD
 
+=======
+>>>>>>> ed189af530ba4155bb6029e49372060de7b19a5f
 }
 
 .imageChangeSize img {
