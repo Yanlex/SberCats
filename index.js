@@ -170,8 +170,8 @@ async function getAllCats() {
     const cats = await response.json()
     cats.forEach((cat) => {
       localStorage.setItem(`${cat.id}`, JSON.stringify(cat));
+      document.querySelector('[data-wrapper]').insertAdjacentHTML('afterbegin', getCatHTMLv2(cat));
     });
-    document.querySelector('[data-wrapper]').insertAdjacentHTML('afterbegin', cats.map((cat) => getCatHTMLv2(cat)).join(''),);
   } catch (error) {
     console.log(error)
   }
