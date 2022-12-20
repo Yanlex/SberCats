@@ -161,22 +161,20 @@ const addCatForm = document.querySelector('#addCat');
 addCatForm.addEventListener('submit', catAddModalAddButton); // Модалка добавить кота, кнопка Добавить
 
 // Получаем котиков
-function getAllCats() {
+async function getAllCats() {
   if ($insideBodyContent.childNodes.length) {
     $insideBodyContent.textContent = '';
   }
-  fetch(`https://cats.petiteweb.dev/api/single/${myLogIn}/show/`)
-    .then((response) => response.json())
-    .then((cats) => {
-      cats.forEach((cat) => {
-        localStorage.setItem(`${cat.id}`, JSON.stringify(cat));
-      });
-      document.querySelector('[data-wrapper]')
-        .insertAdjacentHTML(
-          'afterbegin',
-          cats.map((cat) => getCatHTMLv2(cat)).join(''),
-        );
+  try {
+    const response = await fetch(`https://cats.petiteweb.dev/api/single/${myLogIn}/show/`)
+    const cats = await response.json()
+    cats.forEach((cat) => {
+      localStorage.setItem(`${cat.id}`, JSON.stringify(cat));
     });
+    document.querySelector('[data-wrapper]').insertAdjacentHTML('afterbegin', cats.map((cat) => getCatHTMLv2(cat)).join(''),);
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // https://cats.petiteweb.dev/api/single/yanlex/show/1
