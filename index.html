@@ -17,9 +17,8 @@
     crossorigin="anonymous"></script>
 </head>
 
-<body class="bg-light">
-
-  <div class=" d-grid gap-1">
+<body class=" mainBacground bg-light has-bg-img">
+  <div class="mainBacground d-grid gap-1">
     <header class="p-2 text-bg-dark">
       <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -54,7 +53,7 @@
       </div>
     </header>
     <div class="container">
-      <div data-wrapper class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-1"></div>
+      <div data-wrapper class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-1 mb-2"></div>
     </div>
   </div>
   <!-- Modal Log in -->
@@ -71,9 +70,9 @@
           <!-- это самая первая форма -->
           <form name="main">
             <div class="input-group">
-              <span class="input-group-text" id="basic-addon1">@</span>
+              <span class="input-group-text" id="basic-addon2">@</span>
               <input data-first-modal-login-input type="text" class="form-control" placeholder="Username"
-                aria-label="Username" aria-describedby="basic-addon1">
+                aria-label="Username" aria-describedby="basic-addon2">
               <button data-first-modal-login-ok-button type="button" class="btn btn-primary">ОК</button>
             </div>
           </form>
@@ -209,7 +208,6 @@
       data-bs-toggle="modal">Back to
       first</button>
   </div>
-
 </body>
 
 </html>
