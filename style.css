@@ -1,24 +1,13 @@
 html {
     overflow-y: scroll;
-    overflow-x: auto;
 }
-
-body {
-    padding-right: 0px !important;
-}
-
-body.modal-open {
-    padding-right: 0px !important;
-
-}
-
 
 body {
     background-image: url(cats-bg.jpg);
-    background-repeat: no-repeat;
+    padding-right: 0 !important;
+    background-position: center center;
+    background-attachment: fixed;
     background-size: cover;
-    height: 100vh;
-
 }
 
 .imageChangeSize img {
