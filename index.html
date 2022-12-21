@@ -17,45 +17,45 @@
     crossorigin="anonymous"></script>
 </head>
 
-<body class="bg-light">
-  <div class="d-grid gap-1">
-    <header class="p-2 text-bg-dark">
-      <div class="container">
-        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-          <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-            <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
-              <use xlink:href="#bootstrap"></use>
-            </svg>
-          </a>
+<body>
 
-          <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-            <li>
-              <a href="index.html" class="nav-link px-2 text-secondary">Главная</a>
-            </li>
-          </ul>
-          <div class="me-2">
-            <!-- Button trigger modal Add Cat-->
-            <button data-cat-modal-add-cat-button type="button" class="btn btn-primary" data-bs-toggle="modal"
-              data-bs-target="#addСatForm">
-              Добавить котика
-            </button>
-          </div>
-          <!-- это форма в хедаре после загрузки страницы -->
-          <form name="main">
-            <div data-cat-loginheader-input class="input-group visually-hidden">
-              <span class="input-group-text" id="basic-addon1">@</span>
-              <input data-header-login-input type="text" class="form-control" placeholder="Username"
-                aria-label="Username" aria-describedby="basic-addon1">
-              <button data-header-login-ok-button type="button" class="btn btn-primary">ОК</button>
-            </div>
-          </form>
+  <div class="container">
+    <header class="text-bg-dark p-2 lh-1 py-3">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+            <use xlink:href="#bootstrap"></use>
+          </svg>
+        </a>
+
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li>
+            <a href="index.html" class="nav-link px-2 text-secondary">Главная</a>
+          </li>
+        </ul>
+        <div class="me-2">
+          <!-- Button trigger modal Add Cat-->
+          <button data-cat-modal-add-cat-button type="button" class="btn btn-primary" data-bs-toggle="modal"
+            data-bs-target="#addСatForm">
+            Добавить котика
+          </button>
         </div>
+        <!-- это форма в хедаре после загрузки страницы -->
+        <form name="main">
+          <div data-cat-loginheader-input class="input-group visually-hidden">
+            <span class="input-group-text" id="basic-addon1">@</span>
+            <input data-header-login-input type="text" class="form-control" placeholder="Username" aria-label="Username"
+              aria-describedby="basic-addon1">
+            <button data-header-login-ok-button type="button" class="btn btn-primary">ОК</button>
+          </div>
+        </form>
       </div>
+
     </header>
-    <div class="container">
-      <div data-wrapper class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-1 mb-2"></div>
-    </div>
   </div>
+  <main class="container">
+    <div data-wrapper class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-1 mb-2"></div>
+  </main>
   <!-- Modal Log in -->
   <div class="modal fade bg-dark bg-opacity-50" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
