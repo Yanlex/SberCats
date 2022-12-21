@@ -1,9 +1,3 @@
-.my-bg {
-    background-image: url(cats-bg.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
 .imageChangeSize img {
     object-fit: cover;
     height: 306px;
